@@ -2,3 +2,10 @@ echo "venv/" > .gitignore
 echo "__pycache__/" >> .gitignore
 echo ".env" >> .gitignore
 echo ".DS_Store" >> .gitignore
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+auth_venv/
