@@ -9,3 +9,9 @@ venv/
 env/
 ENV/
 auth_venv/
+
+# Byte-compiled / optimized / DLL files
+core/__pycache__/
+*.pyc
+*.pyo
+*.pyd
