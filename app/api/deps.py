@@ -1,5 +1,5 @@
 from typing import AsyncGenerator
-from app.db.session import AsyncSessionLocal
+from app.db.session import SessionLocal
 
 
 async def get_db() -> AsyncGenerator:
@@ -18,7 +18,7 @@ async def get_db() -> AsyncGenerator:
     1. Automatic connection cleanup (yield/finally)
     2. Easy to mock for unit tests
     """
-    async with AsyncSessionLocal() as session:
+    async with SessionLocal() as session:
         try:
             yield session
         finally:
