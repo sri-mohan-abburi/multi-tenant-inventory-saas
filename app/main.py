@@ -7,12 +7,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.v1.endpoints import tenants
 
+from app.api.v1.endpoints import tenants, login
+
 
 app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
 app.include_router(tenants.router, prefix=settings.API_V1_TENANT_STR, tags=["tenants"])
+app.include_router(login.router, prefix="/api/v1/login", tags=["Login"])
 
 # CORS Middleware
 # Critical for SaaS: Allows your future React/Next.js frontend to talk to this API
