@@ -7,9 +7,9 @@ class Settings(BaseSettings):
     API_V1_TENANT_STR: str = "/api/v1/tenants"
 
     # Security
-    # SECRET_KEY: str = "UPDATE HERE"  # Will be loaded from .env in production
-    # ALGORITHM: str = "HS256"
-    # ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    SECRET_KEY: str = "supersecretkey123"  # Will be loaded from .env in production
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     # Database (Placeholder for now)
     POSTGRES_SERVER: str
