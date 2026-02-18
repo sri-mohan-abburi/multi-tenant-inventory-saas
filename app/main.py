@@ -5,9 +5,7 @@ load_dotenv()  # Load environment variables from .env file
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.v1.endpoints import tenants
-
-from app.api.v1.endpoints import tenants, login
+from app.api.v1.endpoints import tenants, login, products
 
 
 app = FastAPI(
@@ -16,6 +14,7 @@ app = FastAPI(
 
 app.include_router(tenants.router, prefix=settings.API_V1_TENANT_STR, tags=["tenants"])
 app.include_router(login.router, prefix="/api/v1/login", tags=["Login"])
+app.include_router(products.router, prefix="/api/v1/products", tags=["Products"])
 
 # CORS Middleware
 # Critical for SaaS: Allows your future React/Next.js frontend to talk to this API
