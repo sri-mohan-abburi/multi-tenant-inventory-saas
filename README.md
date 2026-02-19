@@ -1,26 +1,49 @@
-# Multi-Tenant SaaS Inventory Platform 📦
+# Multi-Tenant SaaS Inventory Platform
 
-**Architecture:** Monolithic Async API with Logical Tenant Isolation
-**Status:** Active Development
+**Architecture:** Monolithic Async API with Row-Level Tenant Isolation
+**Status:** Production-Ready MVP
 
-## 🚀 Project Overview
-This project is a high-performance **Software-as-a-Service (SaaS)** platform designed to manage inventory, orders, and fulfillment for multiple independent organizations (tenants). It utilizes **PostgreSQL Row-Level Security (RLS)** to ensure strict data isolation while sharing a single database instance—a pattern commonly used for cost-effective scaling on AWS.
+## Project Overview
+This is a high-performance **Software-as-a-Service (SaaS)** platform designed to manage inventory for multiple independent organizations. It utilizes **PostgreSQL** with a Shared-Schema strategy to ensure strict data isolation while maintaining cost efficiency.
 
-## 🏗 System Architecture
-* **API Layer:** FastAPI (Python 3.14) for non-blocking I/O.
-* **Database:** PostgreSQL with **SQLAlchemy** (Async) and **Alembic** for migrations.
-* **Security:** OAuth2 with JWT tokens containing tenant context (Schema Isolation).
-* **Infrastructure:** Designed for AWS Lambda/Fargate deployment via Docker.
+## System Architecture
 
-## 🛠 Features (Planned)
-* **Multi-Tenancy:** Single database, shared schema, logical isolation via `tenant_id`.
-* **RBAC:** Role-Based Access Control (Admin vs. Staff vs. Viewer).
-* **Inventory Engine:** Real-time stock tracking with audit logs.
-* **Order Management:** ACID-compliant transaction processing for orders.
+* **API Layer:** FastAPI (Python 3.12) with Async SQLAlchemy.
+* **Authentication:** OAuth2 with JWT (JSON Web Tokens).
+* **Multi-Tenancy:** Logic-based isolation via `TenantMixin` (auto-injects `tenant_id`).
+* **Infrastructure:** Dockerized Database & Application.
 
-## ⚡ Tech Stack
-* **Language:** Python 3.14
-* **Framework:** FastAPI
-* **Data Validation:** Pydantic V2
-* **ORM:** SQLAlchemy 2.0 (Async)
-* **Migrations:** Alembic
+## Key Features
+* **Tenant Onboarding:** `POST /signup` creates a Tenant Organization + Admin User in one transaction.
+* **Secure Login:** Stateless JWT authentication with BCrypt password hashing.
+* **Inventory Management:** CRUD operations for Products, strictly scoped to the logged-in user's tenant.
+* **Async Database:** High-concurrency support using `asyncpg` drivers.
+
+## How to Run
+1.  **Clone the Repo:**
+    ```bash
+    git clone [https://github.com/sri-mohan-abburi/Multi-Tenant-SaaS-Inventory-Platform.git](https://github.com/sri-mohan-abburi/Multi-Tenant-SaaS-Inventory-Platform.git)
+    cd Multi-Tenant-SaaS-Inventory-Platform
+    ```
+
+2.  **Start Infrastructure:**
+    ```bash
+    docker-compose up -d
+    ```
+
+3.  **Run Migrations:**
+    ```bash
+    alembic upgrade head
+    ```
+
+4.  **Start API:**
+    ```bash
+    uvicorn app.main:app --reload
+    ```
+
+## API Usage
+* **Swagger UI:** `http://localhost:8000/docs`
+* **Workflow:**
+    1.  **Signup:** Create a new Tenant (e.g., "Tesla").
+    2.  **Login:** Get a Bearer Token.
+    3.  **Manage:** Use Token to add Products (e.g., "Model S").
