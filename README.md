@@ -47,5 +47,3 @@ This is a high-performance **Software-as-a-Service (SaaS)** platform designed to
     1.  **Signup:** Create a new Tenant (e.g., "Tesla").
     2.  **Login:** Get a Bearer Token.
     3.  **Manage:** Use Token to add Products (e.g., "Model S").
-
-#update
